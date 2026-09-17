@@ -1,5 +1,15 @@
-# Karpathy tooling (bookmark demo)
+# Karpathy tooling harness demo
 
-Source bookmark: https://x.com/akshay_pachaar/status/2070860837448040832
+Bookmark: https://x.com/akshay_pachaar/status/2070860837448040832
 
-Static interactive page — open `/demos/karpathy-tooling/` on the preview or run `npm run dev` and visit the same path locally.
+Single-page harness with Worker APIs under `/api/karpathy-tooling/*`:
+
+1. **Spec** — edit `.agents-cli-spec.md` (persisted in localStorage)
+2. **Scaffold** — POST `/scaffold` creates ADK-style file tree
+3. **Grade** — generate + deterministic rubric scorecard
+4. **Deploy** — local in-Worker registry (not GCP)
+5. **Trace** — spans + regression diff + cost estimate
+
+Run: `npm run dev` → `/demos/karpathy-tooling/`
+
+Google Agents CLI / ADK / GCP are **not** invoked.
