@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic harness — karpathy tooling demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Agentic harness (one surface)</h1>
+      <p>
+        Bookmark:
+        <a href="https://x.com/akshay_pachaar/status/2070860837448040832" rel="noopener noreferrer"
+          >Karpathy's Agentic Engineering Finally Has Proper Tooling</a
+        >. This is a <strong>local demo harness</strong> — not Google Agents CLI, not ADK, not GCP. Spec →
+        scaffold → grade → deploy (local registry) → trace, plus an autonomous plan/dispatch/measure/learn loop
+        via the Worker API.
+      </p>
+    </header>
+
+    <div class="layout">
+      <nav class="sidebar" aria-label="Workflow steps">
+        <button type="button" class="step-btn" data-step="1">1. Spec</button>
+        <button type="button" class="step-btn" data-step="2">2. Scaffold</button>
+        <button type="button" class="step-btn" data-step="3">3. Grade</button>
+        <button type="button" class="step-btn" data-step="4">4. Deploy / register</button>
+        <button type="button" class="step-btn" data-step="5">5. Trace</button>
+
+        <div class="loop-box">
+          <div class="sub" style="margin-bottom: 0.35rem">Autonomous loop</div>
+          <button type="button" class="primary" id="run-agent-loop">Run code-agent loop</button>
+          <div class="log" id="loop-log" style="margin-top: 0.5rem">plan → dispatch → measure → learn → fix → continue</div>
+        </div>
+      </nav>
+
+      <div class="center">
+        <section class="panel" data-panel="1">
+          <h2>Spec — <code>.agents-cli-spec.md</code></h2>
+          <p class="sub">Edit tools, constraints, and success criteria. Persists in this browser (localStorage).</p>
+          <textarea id="spec-editor" spellcheck="false" aria-label="agents cli spec"></textarea>
+          <button type="button" class="primary" id="save-spec">Save spec</button>
+          <span class="sub" id="spec-status"></span>
+        </section>
+
+        <section class="panel hidden" data-panel="2">
+          <h2>Scaffold — ADK-style tree</h2>
+          <p class="sub">
+            Creates real files under the workspace: <code>app/agent.json</code>, tools, eval config, skills doc.
+            Python/ADK compile is <strong>untested</strong>; JSON config drives the demo runtime.
+          </p>
+          <button type="button" class="primary" id="run-scaffold">Scaffold project</button>
+          <span class="sub" id="scaffold-status"></span>
+        </section>
+
+        <section class="panel hidden" data-panel="3">
+          <h2>Grade — cases &amp; scorecard</h2>
+          <p class="sub">Generate cases from spec, grade with a deterministic rubric (not LLM-as-judge).</p>
+          <button type="button" id="run-generate">Generate eval cases</button>
+          <button type="button" class="primary" id="run-grade">Grade</button>
+          <span class="sub" id="gen-status"></span>
+          <table id="scorecard">
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>Output</th>
+                <th>Result</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="sub" id="score-summary"></p>
+        </section>
+
+        <section class="panel hidden" data-panel="4">
+          <h2>Deploy / register — local runtime</h2>
+          <p class="sub">
+            Registers the agent on an in-Worker registry (<code>bookmark-demos-local</code>). Registry memory is
+            ephemeral on Cloudflare cold starts — re-deploy to invoke again. Google Agent Runtime, Cloud Trace, and
+            Gemini Enterprise are <strong>untested</strong> (no GCP creds).
+          </p>
+          <button type="button" class="primary" id="run-deploy">Deploy &amp; register</button>
+          <span class="sub" id="deploy-status"></span>
+          <table id="registry">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Runtime</th>
+                <th>Endpoint</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <label class="sub" for="invoke-prompt">Smoke-test invoke</label>
+          <input type="text" id="invoke-prompt" value="What is the refund policy?" />
+          <button type="button" id="test-invoke">Invoke</button>
+          <pre class="log" id="invoke-result"></pre>
+        </section>
+
+        <section class="panel hidden" data-panel="5">
+          <h2>Trace</h2>
+          <p class="sub">Spans from grading, deploy, and the autonomous loop. Token cost is labeled estimate.</p>
+          <button type="button" id="open-trace">Refresh trace view</button>
+          <ul class="trace-list" id="trace-spans"></ul>
+          <p class="sub" id="regression-box"></p>
+          <p class="sub" id="cost-box"></p>
+        </section>
+      </div>
+
+      <aside class="files">
+        <strong>Workspace files</strong>
+        <p class="sub">Re-open artifacts from any step.</p>
+        <div id="file-tree"></div>
+        <textarea id="file-editor" spellcheck="false" style="min-height: 200px; margin-top: 0.5rem" aria-label="file editor"></textarea>
+      </aside>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
