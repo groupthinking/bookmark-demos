@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Claudexor / AgenticRAG — bookmark demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Claudexor orchestrator + AgenticRAG</h1>
+      <p>
+        Bookmark:
+        <a href="https://x.com/beamnxw/status/2080237028264857802" rel="noopener noreferrer"
+          >@beamnxw — unified control UI for coding agents &amp; evidence-hunting</a
+        >.
+      </p>
+      <div class="limits" role="note">
+        <strong>Demo limits:</strong> Not a real Claudexor/Claude product integration. No live LLM calls unless
+        provider env vars are configured (this deployment uses deterministic mock fixtures). Citations and
+        evidence cards are demo data only.
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="panel" aria-label="Orchestrator control panel">
+        <h2>Orchestrator — tool runs</h2>
+        <p class="sub">Mock coding-agent steps: plan / search / read / patch / verify.</p>
+        <div id="tool-runs"></div>
+      </section>
+
+      <section class="panel" aria-label="AgenticRAG evidence lane">
+        <h2>AgenticRAG — evidence lane</h2>
+        <p class="sub">Evidence cards with snippet, source, citation id, confidence, and per-citation retry.</p>
+        <label class="sub" for="hunt-query">Hunt query</label>
+        <input
+          id="hunt-query"
+          type="text"
+          value="Claudexor orchestrator evidence lane"
+          style="width: 100%; margin: 0.35rem 0 0.75rem; padding: 0.45rem; border-radius: 0.35rem; border: 1px solid var(--border); background: #0f1528; color: inherit"
+        />
+        <div class="actions">
+          <button type="button" class="primary" id="run-hunt">Run evidence hunt</button>
+          <span id="hunt-status"></span>
+        </div>
+        <div id="evidence-lane" style="margin-top: 1rem"></div>
+      </section>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

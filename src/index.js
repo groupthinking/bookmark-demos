@@ -1,3 +1,5 @@
+import { handleClaudexorApi } from "./claudexor-agenticrag/api.js";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -7,6 +9,9 @@ export default {
         service: "bookmark-demos",
         pattern: "x-bookmarks → cursor-agent → cloudflare-preview",
       });
+    }
+    if (url.pathname.startsWith("/api/claudexor-agenticrag")) {
+      return handleClaudexorApi(request, url);
     }
     return env.ASSETS.fetch(request);
   },
