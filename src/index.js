@@ -1,3 +1,5 @@
+import { handleJevPlaygroundApi } from "./jev-playground/api.js";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -7,6 +9,9 @@ export default {
         service: "bookmark-demos",
         pattern: "x-bookmarks → cursor-agent → cloudflare-preview",
       });
+    }
+    if (url.pathname.startsWith("/api/jev-playground")) {
+      return handleJevPlaygroundApi(request, url);
     }
     return env.ASSETS.fetch(request);
   },

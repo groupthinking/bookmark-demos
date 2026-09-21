@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jev Playground — bookmark demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Jev Playground (typed eval sketch)</h1>
+      <p>
+        Bookmark:
+        <a href="https://x.com/dair_ai/status/2101775443300872536" rel="noopener noreferrer"
+          >@dair_ai — beginner’s intro to Jev + Jev Playground</a
+        >.
+      </p>
+      <div class="limits" role="note">
+        <strong>Demo limits:</strong> Not a real TypesafeAI / Jev product integration. Evaluation uses
+        deterministic mock fixtures only (no live LLM in the default path). Results illustrate typed
+        rubric UX — enum and score fields with pass/fail per criterion — not production judging.
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="panel" aria-label="Input">
+        <h2>Agent output</h2>
+        <p class="sub">Paste a short agent response or load the sample for the selected rubric.</p>
+
+        <label for="rubric">Typed rubric</label>
+        <select id="rubric" aria-describedby="rubric-schema"></select>
+        <div id="rubric-schema" aria-live="polite"></div>
+
+        <label for="output" style="margin-top: 0.85rem">Output to evaluate</label>
+        <textarea id="output" placeholder="Paste agent output here…"></textarea>
+
+        <div class="actions">
+          <button type="button" class="primary" id="evaluate">Evaluate</button>
+          <button type="button" id="load-sample">Load sample</button>
+          <span id="status"></span>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Results">
+        <h2>Typed results</h2>
+        <p class="sub">Each criterion returns a schema-bound value and pass/fail — not a freeform essay.</p>
+        <div id="results">
+          <p class="empty-hint">Run Evaluate to see typed criterion cards.</p>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
