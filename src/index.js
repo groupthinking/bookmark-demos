@@ -1,4 +1,5 @@
 import { handleKarpathyApi } from "./karpathy-tooling/api.js";
+import { handleJevAsJudgeApi } from "./jev-as-judge/api.js";
 
 export default {
   async fetch(request, env) {
@@ -12,6 +13,9 @@ export default {
     }
     if (url.pathname.startsWith("/api/karpathy-tooling")) {
       return handleKarpathyApi(request, url);
+    }
+    if (url.pathname.startsWith("/api/jev-as-judge")) {
+      return handleJevAsJudgeApi(request, url, env);
     }
     return env.ASSETS.fetch(request);
   },

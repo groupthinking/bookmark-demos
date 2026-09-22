@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jev-as-a-Judge — TypeSafe System One demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Jev-as-a-Judge (real TypeSafe)</h1>
+      <p>
+        Bookmark:
+        <a
+          href="https://www.langchain.com/blog/jev-agent-evals-langsmith"
+          rel="noopener noreferrer"
+          >LangChain — Jev-as-a-Judge for Agent Evals</a
+        >
+        ·
+        <a href="https://x.com/LangChain/status/2101454284927959080" rel="noopener noreferrer"
+          >X thread</a
+        >
+      </p>
+      <p class="sub">
+        Paste an agent-run <strong>state</strong>, then evaluate with typed
+        <code>Score</code>, <code>Noul</code>, and <code>Choice</code> questions (quality,
+        pass/fail, grounding, search outcome). The Worker POSTs to
+        <code>https://api.typesafe.ai/v1/systemone</code> with <code>model: jev-latest</code> —
+        no mock scores.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Agent state</h2>
+        <p class="sub">
+          JSON object or string (chat trace, tool results, final answer). Sample is a weather-agent-style
+          trace inspired by the article — text only until you click Evaluate.
+        </p>
+        <textarea id="state-editor" spellcheck="false" aria-label="Agent state JSON"></textarea>
+        <div class="actions">
+          <button type="button" id="load-sample">Reload sample</button>
+          <button type="button" class="primary" id="evaluate-btn">Evaluate with Jev</button>
+          <span id="status"></span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Typed answers</h2>
+        <p class="sub">Summarized from live API <code>answers</code>; full JSON below.</p>
+        <div id="answer-grid" class="answer-grid"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Full response</h2>
+        <pre id="results" aria-live="polite"></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Requires Worker secret <code>TYPESAFE_API_KEY</code>. Without it the API returns
+        <code>503</code> — intentionally no fallback engine. Docs:
+        <a href="https://docs.typesafe.ai/introduction" rel="noopener noreferrer">TypeSafe intro</a>,
+        <a href="https://docs.typesafe.ai/primitives" rel="noopener noreferrer">primitives</a>.
+      </p>
+      <p><a href="/">← bookmark-demos home</a></p>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
