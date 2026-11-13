@@ -73,4 +73,4 @@ npm test
 - Citations are not mapped to individual answers. `noul` has no confidence field in the schema. Choice and score confidence can be null.
 - A refusal is a successful question outcome, not an HTTP error.
 - This environment did not have `PARALLEL_API_KEY`. Live-call validation against Parallel is left for the maintainer who has a key. The unit test that mentions a key uses a local fetch stand-in to check the outbound URL, header, and body. It is not a Parallel response.
-- No Cloudflare preview URL is recorded here. The repo has no workflow that publishes one.
+- Cloudflare Workers Builds publishes a branch preview. The preview does not have `PARALLEL_API_KEY`, so it shows the same missing-key state as a local run without the variable. The URL for this branch is https://demo-2026-11-13-parallel-decisions-bookmark-demos.garveyht.workers.dev/demos/parallel-decisions/
