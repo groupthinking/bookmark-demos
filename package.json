@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "demo:parallel-decisions": "bash demos/parallel-decisions/run-live.sh",
-    "test": "node --test demos/parallel-decisions/build-request.test.js demos/parallel-decisions/decisions.test.js",
+    "test": "node --test demos/parallel-decisions/*.test.js",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {

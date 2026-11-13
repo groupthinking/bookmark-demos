@@ -21,6 +21,8 @@ cleanup() {
   fi
 }
 trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 if [[ -f "$DEV_VARS" ]]; then
   BACKUP="$(mktemp)"
@@ -42,4 +44,8 @@ else
 fi
 
 echo "Open http://127.0.0.1:${PORT}/demos/parallel-decisions/"
-exec npx wrangler dev --port "$PORT" --ip 0.0.0.0 --show-interactive-dev-session=false
+# Stay in this shell so the EXIT trap restores or deletes .dev.vars.
+# `exec` would replace Bash and skip that cleanup when Wrangler exits.
+npx wrangler dev --port "$PORT" --ip 0.0.0.0 --show-interactive-dev-session=false
+status=$?
+exit "$status"

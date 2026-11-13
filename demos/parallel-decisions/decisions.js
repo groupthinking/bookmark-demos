@@ -82,6 +82,22 @@ export async function handleDecisionsApi(request, url, env, fetchImpl = fetch) {
       throw error;
     }
 
+    const upstreamFailure = (error) => {
+      const timedOut = error?.name === "TimeoutError" || error?.name === "AbortError";
+      return json(
+        {
+          ok: false,
+          code: timedOut ? "upstream_timeout" : "upstream_unreachable",
+          error: timedOut
+            ? "Parallel did not respond within 30 seconds."
+            : "The Decisions request could not be completed.",
+          endpoint: DECISIONS_URL,
+          request: decisionBody,
+        },
+        502
+      );
+    };
+
     let upstream;
     try {
       upstream = await fetchImpl(DECISIONS_URL, {
@@ -94,22 +110,15 @@ export async function handleDecisionsApi(request, url, env, fetchImpl = fetch) {
         signal: AbortSignal.timeout(30000),
       });
     } catch (error) {
-      const timedOut = error?.name === "TimeoutError" || error?.name === "AbortError";
-      return json(
-        {
-          ok: false,
-          code: timedOut ? "upstream_timeout" : "upstream_unreachable",
-          error: timedOut
-            ? "Parallel did not respond within 30 seconds."
-            : "The Decisions request could not be sent.",
-          endpoint: DECISIONS_URL,
-          request: decisionBody,
-        },
-        502
-      );
+      return upstreamFailure(error);
     }
 
-    const raw = await upstream.text();
+    let raw;
+    try {
+      raw = await upstream.text();
+    } catch (error) {
+      return upstreamFailure(error);
+    }
     const safeRaw = redactSecrets(raw, key);
     let parsed = null;
     try {

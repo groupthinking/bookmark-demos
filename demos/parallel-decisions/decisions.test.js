@@ -75,6 +75,47 @@ test("a configured call posts the Decisions body and returns the upstream JSON",
   assert.equal(JSON.stringify(payload).includes(SECRET), false);
 });
 
+test("a dropped upstream body returns JSON instead of throwing", async () => {
+  const response = await handleDecisionsApi(
+    post({ instructions: "Has Parallel announced a Decisions API?" }),
+    new URL("https://bookmark-demos.local/api/parallel-decisions"),
+    { PARALLEL_API_KEY: SECRET },
+    async () => ({
+      ok: true,
+      status: 200,
+      text: async () => {
+        const error = new Error("socket closed before the body finished");
+        error.name = "AbortError";
+        throw error;
+      },
+    })
+  );
+  assert.equal(response.status, 502);
+  const payload = await response.json();
+  assert.equal(payload.code, "upstream_timeout");
+  assert.equal(payload.decision, undefined);
+  assert.equal(JSON.stringify(payload).includes(SECRET), false);
+});
+
+test("an upstream body read failure that is not a timeout is unreachable", async () => {
+  const response = await handleDecisionsApi(
+    post({ instructions: "Has Parallel announced a Decisions API?" }),
+    new URL("https://bookmark-demos.local/api/parallel-decisions"),
+    { PARALLEL_API_KEY: SECRET },
+    async () => ({
+      ok: false,
+      status: 200,
+      text: async () => {
+        throw new Error("connection reset");
+      },
+    })
+  );
+  assert.equal(response.status, 502);
+  const payload = await response.json();
+  assert.equal(payload.code, "upstream_unreachable");
+  assert.equal(payload.decision, undefined);
+});
+
 test("upstream error bodies that repeat the key are redacted", async () => {
   const response = await handleDecisionsApi(
     post({ instructions: "Has Parallel announced a Decisions API?" }),
