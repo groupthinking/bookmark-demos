@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Parallel Decisions</title>
+    <link rel="stylesheet" href="/demos/parallel-decisions/styles.css" />
+  </head>
+  <body>
+    <header>
+      <p class="kicker"><a href="/">bookmark-demos</a></p>
+      <h1>Parallel Decisions</h1>
+      <p>
+        Bookmark:
+        <a href="https://x.com/Sumanth_077/status/2115446285205651494" rel="noopener noreferrer">RAG for decision models is here</a>.
+        This page posts your question to <code>POST https://api.parallel.ai/v1/decisions</code> through the Worker.
+        The key stays in <code>PARALLEL_API_KEY</code> on the server.
+      </p>
+    </header>
+
+    <main>
+      <section id="key-banner" class="banner" role="status" aria-live="polite">Checking whether PARALLEL_API_KEY is set…</section>
+
+      <form id="decision-form">
+        <fieldset>
+          <legend>Question</legend>
+          <label for="type">Type</label>
+          <select id="type" name="type">
+            <option value="noul">Predicate (noul) — probability the statement is true</option>
+            <option value="choice">Choice — one named option</option>
+            <option value="score">Score — ordered levels</option>
+          </select>
+
+          <label for="instructions">Instructions</label>
+          <textarea id="instructions" name="instructions" required rows="3" placeholder="Has Parallel announced a Decisions API?"></textarea>
+
+          <label for="name">Answer name</label>
+          <input id="name" name="name" type="text" value="decision" spellcheck="false" />
+          <p class="sub">Letters, numbers, underscores, and hyphens. Parallel returns the answer under this key.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>State</legend>
+          <label for="state">Context shared by the question</label>
+          <textarea id="state" name="state" rows="4" placeholder="Plain text is sent as { &quot;context&quot;: &quot;...&quot; }. A JSON value is sent as state."></textarea>
+          <p class="sub">Required by the API. An empty box is sent as <code>{}</code>.</p>
+        </fieldset>
+
+        <fieldset id="criteria-noul">
+          <legend>Predicate criteria (optional)</legend>
+          <label for="true-criteria">What true means</label>
+          <input id="true-criteria" name="trueCriteria" type="text" />
+          <label for="false-criteria">What false means</label>
+          <input id="false-criteria" name="falseCriteria" type="text" />
+          <p class="sub">Send both descriptions or neither. A noul answer is a probability from 0 to 1, not a boolean.</p>
+        </fieldset>
+
+        <fieldset id="criteria-choice" hidden>
+          <legend>Choice options</legend>
+          <label for="choice-criteria">One option per line: <code>name | description</code></label>
+          <textarea id="choice-criteria" rows="5" spellcheck="false" placeholder="documented | Public docs describe an official CLI.&#10;unknown | The pages do not establish whether a CLI exists."></textarea>
+          <p class="sub">2 to 255 options.</p>
+        </fieldset>
+
+        <fieldset id="criteria-score" hidden>
+          <legend>Score levels</legend>
+          <label for="score-criteria">One level per line, lowest to highest</label>
+          <textarea id="score-criteria" rows="4" placeholder="No public CLI documentation.&#10;CLI docs exist but cover one workflow.&#10;CLI docs cover search and enrichment."></textarea>
+          <p class="sub">2 to 10 levels. The score is the probability-weighted mean of the zero-based indexes.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Grounding options</legend>
+          <label for="after-date">Prefer sources on or after</label>
+          <input id="after-date" name="afterDate" type="date" />
+          <label for="location">Location (ISO country code)</label>
+          <input id="location" name="location" type="text" maxlength="2" placeholder="us" spellcheck="false" />
+          <label class="check"><input id="include-excerpts" type="checkbox" checked /> Include citation excerpts</label>
+          <p class="sub">Omitted when unused. An empty <code>advanced_settings</code> object is a 422 from Parallel, so this form does not send one.</p>
+        </fieldset>
+
+        <button type="submit" id="submit">Ask Parallel</button>
+        <p id="form-status" class="sub" role="status" aria-live="polite"></p>
+      </form>
+
+      <section id="result" aria-live="polite">
+        <h2>Decision</h2>
+        <p class="sub" id="result-empty">No decision yet. Submitting with no key returns the missing-key error and no answer.</p>
+        <div id="result-body"></div>
+      </section>
+    </main>
+    <script type="module" src="/demos/parallel-decisions/app.js"></script>
+  </body>
+</html>

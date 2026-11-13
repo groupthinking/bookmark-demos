@@ -1,0 +1,94 @@
+{
+  "url": "http://127.0.0.1:8787/demos/parallel-decisions/",
+  "question": "Should a 2-person startup use Postgres or SQLite for its first product?",
+  "type": "choice",
+  "name": "database",
+  "instructions": "Recommend one database for a two-person startup's first product. Choose postgres if PostgreSQL is the better first production database, or sqlite if SQLite is the better first production database. Weigh operational simplicity, time to ship, typical early-stage web/SaaS workloads, backups, hosting cost, and how painful a later migration would be.",
+  "state": "A two-person startup is building its first product: a small B2B web app with a handful of early customers expected in the first six months. The founders will operate the stack themselves. They want to ship quickly and keep ops simple, but they do not want to paint themselves into a corner if the product starts to grow. They are choosing between PostgreSQL and SQLite as the first production database.",
+  "criteria": [
+    "postgres | Use PostgreSQL as the first production database.",
+    "sqlite | Use SQLite as the first production database."
+  ],
+  "location": "us",
+  "include_excerpts": true,
+  "banner": "PARALLEL_API_KEY is set on the server. Ask Parallel will call POST https://api.parallel.ai/v1/decisions. The key is not shown.",
+  "http_status": 200,
+  "latency_ms": 648,
+  "payload_ok": true,
+  "decision_id": "decisions_d586a38900385975f19bb53077b3c556",
+  "mode": "fast",
+  "usage": {
+    "input_tokens": 2705,
+    "output_tokens": 0
+  },
+  "answers": {
+    "database": {
+      "type": "choice",
+      "choice": "postgres",
+      "probabilities": {
+        "postgres": 0.9063873190971876,
+        "sqlite": 0.09361268090281244
+      },
+      "confidence": 0.8127746381943752
+    }
+  },
+  "citation_count": 10,
+  "citation_titles": [
+    {
+      "title": "Which database should you use? A plain guide for app builders \u00b7 Cyborb",
+      "url": "https://cyborb.ai/blog/choose-a-database"
+    },
+    {
+      "title": "Database Selection Checklist for SaaS Founders",
+      "url": "https://mvphub.tech/blog/database-selection-checklist-for-saas-founders"
+    },
+    {
+      "title": "Best Tech Stack for MVPs in 2026 | techstack.sh",
+      "url": "https://techstack.sh/guides/tech-stack-for-mvp"
+    },
+    {
+      "title": "Postgres vs SQLite for a Single-Founder SaaS in 2026: The Decision, Not the Benchmark",
+      "url": "https://dreaming.press/posts/postgres-vs-sqlite-single-founder-saas-2026-decision.html"
+    },
+    {
+      "title": "Choosing a Database for Your SaaS Startup: Postgres, PlanetScale, Neon, and Turso Compared \u2014 Let's Build",
+      "url": "https://letsbuildsolutions.com/blog/web-engineering/choosing-a-database-for-your-saas-startup-postgres-planetscale-neon-and-turso-compared"
+    },
+    {
+      "title": "Choosing a Database for a SaaS Product - DEV Community",
+      "url": "https://dev.to/wizcodes/choosing-a-database-for-a-saas-product-5c51"
+    },
+    {
+      "title": "Best Database for a Web App Compared",
+      "url": "https://webdev.cloud/best-database-for-a-web-app"
+    },
+    {
+      "title": "Which database should I use? Postgres, MySQL, SQL Server",
+      "url": "https://renode.space/blog/which-database-should-i-use"
+    },
+    {
+      "title": "Database picker for SaaS: which Postgres / SQLite / NoSQL fits?",
+      "url": "https://www.promptstoproduct.com/database-picker-for-saas"
+    },
+    {
+      "title": "SQLite vs PostgreSQL for Small Web Apps: How to Choose - Super Dev Resources",
+      "url": "https://superdevresources.com/sqlite-vs-postgresql-small-web-apps/"
+    }
+  ],
+  "form_status": "Parallel responded.",
+  "request_timing": {
+    "status": 200,
+    "url": "http://127.0.0.1:8787/api/parallel-decisions",
+    "request_timing": {
+      "startTime": 1794560843807.693,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.269,
+      "responseStart": 595.518,
+      "responseEnd": -1
+    }
+  }
+}

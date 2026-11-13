@@ -1,3 +1,4 @@
+import { handleParallelDecisions } from "../demos/parallel-decisions/api.js";
 import { handleKarpathyApi } from "./karpathy-tooling/api.js";
 
 export default {
@@ -12,6 +13,13 @@ export default {
     }
     if (url.pathname.startsWith("/api/karpathy-tooling")) {
       return handleKarpathyApi(request, url);
+    }
+    if (
+      url.pathname.startsWith("/api/parallel-decisions") ||
+      url.pathname === "/demos/parallel-decisions" ||
+      url.pathname.startsWith("/demos/parallel-decisions/")
+    ) {
+      return handleParallelDecisions(request, url, env);
     }
     return env.ASSETS.fetch(request);
   },
