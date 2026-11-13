@@ -2,5 +2,12 @@ name = "bookmark-demos"
 main = "src/index.js"
 compatibility_date = "2026-09-16"
 
+# HTML is text by Wrangler's default rule. CSS and the browser script are
+# imported from demos/parallel-decisions and served by the Worker.
+[[rules]]
+type = "Text"
+globs = ["**/*.css", "**/app.js"]
+fallthrough = true
+
 [assets]
 directory = "./public"
