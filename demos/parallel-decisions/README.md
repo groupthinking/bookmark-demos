@@ -4,7 +4,7 @@ Bookmark: https://x.com/Sumanth_077/status/2115446285205651494
 
 Sumanth's post describes Parallel's Decisions API: send state and typed questions, and get a web-grounded answer with probability and sources in one call, instead of search then a separate decision model such as [Typesafe Jev](https://docs.typesafe.ai/introduction). Hayden approved this demo on 2026-11-13.
 
-This page does not call Jev. Jev answers from the state you send and does not retrieve the web. A pretend Jev panel is not included. There is no `TYPESAFE_API_KEY` in this demo.
+This page does not call Jev. Jev answers from the state you send and does not retrieve the web. The demo has no pretend Jev panel and no `TYPESAFE_API_KEY`.
 
 ## Endpoint
 
@@ -72,5 +72,5 @@ npm test
 - `advanced_settings` may include `after_date` (`YYYY-MM-DD`), `location` (ISO 3166-1 alpha-2; `gb`, not `uk`), and `include_excerpts`. An empty settings object is invalid.
 - Citations are not mapped to individual answers. `noul` has no confidence field in the schema. Choice and score confidence can be null.
 - A refusal is a successful question outcome, not an HTTP error.
-- This environment did not have `PARALLEL_API_KEY`. Live-call validation against Parallel is left for the maintainer who has a key. The unit test that mentions a key uses a local fetch stand-in to check the outbound URL, header, and body. It is not a Parallel response.
+- A recorded live `choice` call is in `demos/parallel-decisions/artifacts/live-run.json`. The question asked whether a two-person startup should use Postgres or SQLite. Parallel returned HTTP 200 in 648 ms, `decision_id` `decisions_d586a38900385975f19bb53077b3c556`, choice `postgres` with probability 0.9063873190971876, and 10 citations. The unit test that mentions a key uses a local fetch stand-in to check the outbound URL, header, and body. It is not a Parallel response.
 - Cloudflare Workers Builds publishes a branch preview. The preview does not have `PARALLEL_API_KEY`, so it shows the same missing-key state as a local run without the variable. The URL for this branch is https://demo-2026-11-13-parallel-decisions-bookmark-demos.garveyht.workers.dev/demos/parallel-decisions/

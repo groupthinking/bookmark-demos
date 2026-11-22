@@ -1,9 +1,3 @@
-/**
- * Builds a Parallel Decisions request from the demo form.
- * Schema: https://docs.parallel.ai/api-reference/decisions/decisions
- * POST https://api.parallel.ai/v1/decisions
- */
-
 export const DECISIONS_URL = "https://api.parallel.ai/v1/decisions";
 export const QUESTION_NAME_PATTERN = /^[A-Za-z0-9_-]+$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
