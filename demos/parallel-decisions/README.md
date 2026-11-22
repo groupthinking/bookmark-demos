@@ -61,6 +61,16 @@ Request-shape tests, which do not call Parallel:
 npm test
 ```
 
+## Agent evals
+
+`evals/parallel-decisions.eval.ts` has three cases: `missing-key`, `noul-send`, and `one-sided`. They run against `bot/`. `build_decision_request` uses the demo's request builder. `decide` does not call Parallel when the session purpose is `eval`.
+
+```bash
+npx --yes "@grok/agent-sdk@0.7.2" eval --dir . --list
+```
+
+A model turn needs `CURSOR_API_KEY`, `CURSOR_API_KEY_FILE`, or `CURSOR_SERVICE_ACCOUNT_KEY`. `--list` does not.
+
 ## Limits
 
 - One question per submit. The API allows 1–100 related questions that share one retrieval. This demo does not batch.
